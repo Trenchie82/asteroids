@@ -11,14 +11,17 @@ def main():
     dt = 0
     ship = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     while play == True:
+        dt = clock.tick(60) / 1000
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 play = False
         
+        ship.update(dt)
         screen.fill(black)
-        ship.draw(screen)
+        ship.draw(screen)        
         pygame.display.flip()
-        dt = clock.tick(60) / 1000
+        
+        
         
     
     
