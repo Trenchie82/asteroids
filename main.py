@@ -1,4 +1,5 @@
 import pygame
+import sys
 from constants import *
 from player import Player
 from asteroid import Asteroid
@@ -19,21 +20,27 @@ def main():
     Asteroid.containers = (ast_grp, updatable, drawable)
     AsteroidField.containers = (updatable,)
     
-    play = True
     black = (0, 0, 0)
     clock = pygame.time.Clock()
     dt = 0
     ship = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     field = AsteroidField()
     
-    while play == True:
+    while True:
         dt = clock.tick(60) / 1000
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 play = False
+                sys.exit()
         
         for sprite in updatable:
             sprite.update(dt)
+
+        for asteroid in ast_grp:
+            if ship.collision(asteroid):
+                print("Game over!")
+                sys.exit()
+
         screen.fill(black)
         for sprite in drawable:
             sprite.draw(screen)        
